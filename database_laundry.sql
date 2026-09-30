@@ -1,4 +1,5 @@
--- SISTEM LAUNDRY COMPLETE MYSQL DUMP FOR CPANEL
+-- SISTEM LAUNDRY PERFECT MYSQL DUMP FOR CPANEL
+-- Database: maiman88_laundry
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,14 +40,18 @@ CREATE TABLE `sessions` (
 DROP TABLE IF EXISTS `pelanggan`;
 CREATE TABLE `pelanggan` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `kode` varchar(50) NOT NULL,
+  `kode_pelanggan` varchar(50) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `no_hp` varchar(50) NOT NULL,
   `alamat` text DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `jenis_kelamin` varchar(10) DEFAULT NULL,
+  `catatan` text DEFAULT NULL,
+  `aktif` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `pelanggan_kode_unique` (`kode`)
+  UNIQUE KEY `pelanggan_kode_unique` (`kode_pelanggan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 4. layanan
@@ -54,10 +59,12 @@ DROP TABLE IF EXISTS `layanan`;
 CREATE TABLE `layanan` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) NOT NULL,
-  `jenis` varchar(50) NOT NULL,
-  `harga` decimal(12,2) NOT NULL,
+  `ikon` varchar(50) DEFAULT '🧺',
+  `harga_per_kg` decimal(12,2) NOT NULL,
   `estimasi_hari` int(11) NOT NULL DEFAULT 1,
-  `keterangan` text DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'aktif',
+  `urutan` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -67,21 +74,29 @@ CREATE TABLE `layanan` (
 DROP TABLE IF EXISTS `transaksi`;
 CREATE TABLE `transaksi` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `kode_invoice` varchar(50) NOT NULL,
+  `no_transaksi` varchar(50) NOT NULL,
   `pelanggan_id` bigint(20) UNSIGNED NOT NULL,
   `layanan_id` bigint(20) UNSIGNED NOT NULL,
-  `berat_jumlah` decimal(8,2) NOT NULL,
-  `total_biaya` decimal(12,2) NOT NULL,
-  `jumlah_bayar` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `status_bayar` varchar(50) NOT NULL DEFAULT 'belum_bayar',
-  `status_laundry` varchar(50) NOT NULL DEFAULT 'antrian',
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `berat` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `harga_per_kg` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `subtotal` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `diskon` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `total` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `metode_pembayaran` varchar(50) NOT NULL DEFAULT 'cash',
+  `status_pembayaran` varchar(50) NOT NULL DEFAULT 'belum_lunas',
+  `jumlah_dp` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `sisa_bayar` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `status` varchar(50) NOT NULL DEFAULT 'baru',
   `tanggal_masuk` datetime NOT NULL,
+  `estimasi_selesai` datetime DEFAULT NULL,
   `tanggal_selesai` datetime DEFAULT NULL,
   `catatan` text DEFAULT NULL,
+  `catatan_batal` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `transaksi_kode_invoice_unique` (`kode_invoice`)
+  UNIQUE KEY `transaksi_no_transaksi_unique` (`no_transaksi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 6. pengaturan
