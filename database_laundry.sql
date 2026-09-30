@@ -1,19 +1,19 @@
--- SISTEM LAUNDRY DATABASE DUMP FOR MYSQL / CPANEL
--- Generated on 2026-09-30 08:08:46
+-- SISTEM LAUNDRY COMPLETE MYSQL DUMP FOR CPANEL
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
+-- 1. users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `role` varchar(50) NOT NULL DEFAULT 'kasir',
+  `no_hp` varchar(50) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(50) NOT NULL DEFAULT 'kasir',
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -21,7 +21,21 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 2. sessions
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE `sessions` (
+  `id` varchar(255) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `payload` longtext NOT NULL,
+  `last_activity` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sessions_user_id_index` (`user_id`),
+  KEY `sessions_last_activity_index` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 3. pelanggan
 DROP TABLE IF EXISTS `pelanggan`;
 CREATE TABLE `pelanggan` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -35,7 +49,7 @@ CREATE TABLE `pelanggan` (
   UNIQUE KEY `pelanggan_kode_unique` (`kode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+-- 4. layanan
 DROP TABLE IF EXISTS `layanan`;
 CREATE TABLE `layanan` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -49,7 +63,7 @@ CREATE TABLE `layanan` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+-- 5. transaksi
 DROP TABLE IF EXISTS `transaksi`;
 CREATE TABLE `transaksi` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -70,7 +84,7 @@ CREATE TABLE `transaksi` (
   UNIQUE KEY `transaksi_kode_invoice_unique` (`kode_invoice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+-- 6. pengaturan
 DROP TABLE IF EXISTS `pengaturan`;
 CREATE TABLE `pengaturan` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -81,6 +95,7 @@ CREATE TABLE `pengaturan` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `pengaturan_key_unique` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- Data for table `users`
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `no_hp`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES ('1', 'Owner / Admin', 'admin@gmail.com', 'owner', '081234567890', NULL, '$2y$12$Cx9.iDGG3odWpES6mH1wBOz9Pyy8cw7JqebVJ/OLnwGJtooJgvdU.', '99Uzqx6Ovi13tVEzu7OVmeAFVByCVETBUpdJFYS9nyrKBP70QLmCtyvynM4y', '2026-09-30 04:19:59', '2026-09-30 06:17:31');
