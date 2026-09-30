@@ -195,9 +195,27 @@
       border-radius: 12px;
       border: 1.5px solid #e2e8f0;
     }
-    .form-control:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    .portfolio-badge {
+      background: rgba(99, 102, 241, 0.18);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #c7d2fe;
+      border-radius: 50px;
+      padding: 7px 18px;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 10;
+      text-decoration: none;
+    }
+    .portfolio-badge:hover {
+      background: rgba(99, 102, 241, 0.35);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
     }
   </style>
 </head>
@@ -209,18 +227,11 @@
   $isImg = str_starts_with($logo, '/') || str_starts_with($logo, 'http') || str_contains($logo, '.');
 @endphp
 
-  <!-- Top Floating Demo Bar -->
-  <div class="demo-top-bar">
-    <div class="d-flex align-items-center gap-2">
-      <span class="live-badge">
-        <span class="pulse-dot"></span> Live Demo Siap Uji
-      </span>
-      <span class="small opacity-75 d-none d-sm-inline">Uji coba langsung semua fitur</span>
-    </div>
-    <button type="button" class="btn-buy-modal" data-bs-toggle="modal" data-bs-target="#modalBeliSourceCode">
-      <i class="fas fa-gem"></i> Beli Source Code
-    </button>
-  </div>
+  <!-- Badge Portfolio MaimanDev (Balik ke Portofolio) -->
+  <a href="https://maimandev.my.id" class="portfolio-badge">
+    <span style="color:#10b981;">●</span> Live Showcase Proyek &bull; <strong>maimandev.my.id</strong>
+    <i class="fas fa-arrow-up-right-from-square ms-1" style="font-size:11px;"></i>
+  </a>
 
   <div class="login-box">
     <div class="text-center mb-3">

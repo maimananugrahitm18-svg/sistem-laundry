@@ -473,6 +473,12 @@
           </div>
         </div>
 
+        <!-- Link Kembali ke Portofolio MaimanDev -->
+        <a href="https://maimandev.my.id" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1" style="border-radius: 10px; font-weight: 600; font-size: 0.8rem;" title="Kembali ke Portofolio Utama">
+          <i class="fas fa-arrow-left"></i>
+          <span class="d-none d-md-inline">maimandev.my.id</span>
+        </a>
+
         <!-- Tombol Beli Source Code untuk Demo Online -->
         <button type="button" class="btn btn-sm text-dark fw-bold d-inline-flex align-items-center gap-1 shadow-sm" style="background: linear-gradient(135deg, #fbbf24, #f59e0b); border: none; border-radius: 10px; padding: 6px 14px;" data-bs-toggle="modal" data-bs-target="#modalBeliSourceCodeTop">
           <i class="fas fa-gem text-indigo" style="color: #4f46e5;"></i>
